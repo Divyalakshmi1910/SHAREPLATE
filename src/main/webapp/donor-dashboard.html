@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard – SharePlate</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body id="donor-dashboard-page">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <div class="brand-icon">🌱</div>
+                <span>SharePlate</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="donor-dashboard.html" class="nav-link active">Donor Dashboard</a>
+                <a href="add-donation.html" class="nav-link">+ Add Food Donation</a>
+                <a href="available-donations.html" class="nav-link">All Available Food</a>
+            </div>
+
+            <div class="nav-actions" id="nav-auth-actions">
+                <!-- Injected by api.js -->
+            </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <main class="dashboard-wrapper">
+        <div class="container">
+            <!-- Header Profile Bar -->
+            <div class="dashboard-header">
+                <div class="dashboard-title-group">
+                    <h1>Donor Control Center</h1>
+                    <p>
+                        Logged in as: <strong id="donor-profile-name" style="color:var(--primary-darker);">Loading...</strong> 
+                        (<span id="donor-profile-org">Restaurant / Donor</span>)
+                    </p>
+                </div>
+                <div class="dashboard-actions">
+                    <a href="add-donation.html" class="btn btn-primary btn-lg">
+                        🍲 + Post New Food Donation
+                    </a>
+                </div>
+            </div>
+
+            <!-- KPI Metric Cards -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-info">
+                        <div class="metric-title">Total Donations</div>
+                        <div class="metric-value" id="kpi-total-donations">0</div>
+                        <div class="metric-subtext">Lifetime listings published</div>
+                    </div>
+                    <div class="metric-icon-box">📊</div>
+                </div>
+
+                <div class="metric-card accent-blue">
+                    <div class="metric-info">
+                        <div class="metric-title">Available for Pickup</div>
+                        <div class="metric-value" id="kpi-available-donations">0</div>
+                        <div class="metric-subtext">Surplus awaiting requests</div>
+                    </div>
+                    <div class="metric-icon-box">🥦</div>
+                </div>
+
+                <div class="metric-card accent-amber">
+                    <div class="metric-info">
+                        <div class="metric-title">Pending NGO Requests</div>
+                        <div class="metric-value" id="kpi-pending-requests">0</div>
+                        <div class="metric-subtext">Needs your review &amp; approval</div>
+                    </div>
+                    <div class="metric-icon-box">🤝</div>
+                </div>
+
+                <div class="metric-card accent-purple">
+                    <div class="metric-info">
+                        <div class="metric-title">Completed Donations</div>
+                        <div class="metric-value" id="kpi-completed-donations">0</div>
+                        <div class="metric-subtext">Collected or Delivered</div>
+                    </div>
+                    <div class="metric-icon-box">🚚</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-target="tab-my-donations">
+                    🍲 My Food Donations 
+                    <span class="tab-counter" id="tab-counter-donations">0</span>
+                </button>
+                <button class="tab-btn" data-target="tab-incoming-requests">
+                    📬 Incoming NGO Requests 
+                    <span class="tab-counter" id="tab-counter-requests">0</span>
+                </button>
+            </div>
+
+            <!-- Tab 1: My Food Donations -->
+            <div id="tab-my-donations" class="tab-content active">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Your Food Donation Listings</div>
+                        <div>
+                            <a href="add-donation.html" class="btn btn-sm btn-primary">+ Post Food</a>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Food Item &amp; Category</th>
+                                    <th>Quantity &amp; Storage</th>
+                                    <th>Prep Time &amp; Deadline</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="donor-donations-tbody">
+                                <!-- Populated dynamically by donor.js -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="donor-donations-empty" class="empty-state" style="display:none;">
+                        <div class="empty-icon">🍲</div>
+                        <h3>No food donations posted yet</h3>
+                        <p>Have surplus meals, fresh bread, or ingredients today? Publish a donation to help local charities.</p>
+                        <a href="add-donation.html" class="btn btn-primary">+ Add First Donation</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Incoming NGO Requests -->
+            <div id="tab-incoming-requests" class="tab-content">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Requests Placed by Certified NGOs</div>
+                        <div style="font-size:0.85rem; color:var(--text-secondary);">
+                            Approve requests so NGOs can arrange food pickup.
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>NGO Details</th>
+                                    <th>Food Item</th>
+                                    <th>Beneficiaries &amp; Note</th>
+                                    <th>Requested Pickup</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="donor-requests-tbody">
+                                <!-- Populated dynamically by donor.js -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="donor-requests-empty" class="empty-state" style="display:none;">
+                        <div class="empty-icon">📬</div>
+                        <h3>No incoming requests at the moment</h3>
+                        <p>When an NGO requests one of your available food listings, it will appear here for your review and approval.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding:30px 0;">
+        <div class="container" style="text-align:center; font-size:0.85rem; color:#94a3b8;">
+            &copy; 2026 SharePlate – Donor Management Console.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/donor.js"></script>
+</body>
+</html>

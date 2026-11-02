@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard – SharePlate</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body id="admin-dashboard-page">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <div class="brand-icon">🌱</div>
+                <span>SharePlate</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="admin-dashboard.html" class="nav-link active">Admin Console</a>
+                <a href="available-donations.html" class="nav-link">Live Food Feed</a>
+            </div>
+
+            <div class="nav-actions" id="nav-auth-actions">
+                <!-- Injected dynamically by api.js -->
+            </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Admin Dashboard -->
+    <main class="dashboard-wrapper">
+        <div class="container">
+            <!-- Header Profile Bar -->
+            <div class="dashboard-header">
+                <div class="dashboard-title-group">
+                    <h1>Platform Administration &amp; Oversight</h1>
+                    <p>System-wide monitoring of food rescue operations, registered stakeholders, and donation statuses.</p>
+                </div>
+            </div>
+
+            <!-- KPI Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-info">
+                        <div class="metric-title">Registered Donors</div>
+                        <div class="metric-value" id="admin-kpi-donors">0</div>
+                        <div class="metric-subtext">Restaurants, canteens, bakeries</div>
+                    </div>
+                    <div class="metric-icon-box">🥦</div>
+                </div>
+
+                <div class="metric-card accent-blue">
+                    <div class="metric-info">
+                        <div class="metric-title">Certified NGOs</div>
+                        <div class="metric-value" id="admin-kpi-ngos">0</div>
+                        <div class="metric-subtext">Shelters &amp; food banks</div>
+                    </div>
+                    <div class="metric-icon-box">🤝</div>
+                </div>
+
+                <div class="metric-card accent-purple">
+                    <div class="metric-info">
+                        <div class="metric-title">Total Donations</div>
+                        <div class="metric-value" id="admin-kpi-donations">0</div>
+                        <div class="metric-subtext">Cumulative food listings</div>
+                    </div>
+                    <div class="metric-icon-box">📦</div>
+                </div>
+
+                <div class="metric-card accent-amber">
+                    <div class="metric-info">
+                        <div class="metric-title">Completed Deliveries</div>
+                        <div class="metric-value" id="admin-kpi-delivered">0</div>
+                        <div class="metric-subtext">Safely distributed batches</div>
+                    </div>
+                    <div class="metric-icon-box">✅</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-target="tab-admin-donations">
+                    🍲 Master Food Donations 
+                    <span class="tab-counter" id="admin-tab-counter-donations">0</span>
+                </button>
+                <button class="tab-btn" data-target="tab-admin-users">
+                    👥 Registered Stakeholders 
+                    <span class="tab-counter" id="admin-tab-counter-users">0</span>
+                </button>
+            </div>
+
+            <!-- Tab 1: Master Donations Directory -->
+            <div id="tab-admin-donations" class="tab-content active">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">All Platform Food Donations</div>
+                        <div class="panel-toolbar">
+                            <input type="text" id="admin-search-donations" class="search-input" placeholder="🔍 Search item name or donor...">
+                            <select id="admin-filter-status" class="filter-select">
+                                <option value="ALL">All Statuses</option>
+                                <option value="Available">Available</option>
+                                <option value="Requested">Requested</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Collected">Collected</option>
+                                <option value="Delivered">Delivered</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Food Item &amp; Category</th>
+                                    <th>Donor</th>
+                                    <th>Quantity</th>
+                                    <th>Collection Safe Date</th>
+                                    <th>Status</th>
+                                    <th>Inspect</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-donations-tbody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="admin-donations-empty" class="empty-state" style="display:none;">
+                        <div class="empty-icon">🔍</div>
+                        <h3>No donations match your filter</h3>
+                        <p>Try resetting the search keyword or selecting "All Statuses".</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Registered Users Directory -->
+            <div id="tab-admin-users" class="tab-content">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Registered Donors, NGOs &amp; Admins</div>
+                        <div class="panel-toolbar">
+                            <input type="text" id="admin-search-users" class="search-input" placeholder="🔍 Search name or email...">
+                            <select id="admin-filter-role" class="filter-select">
+                                <option value="ALL">All Roles</option>
+                                <option value="DONOR">Donors</option>
+                                <option value="NGO">NGOs</option>
+                                <option value="ADMIN">Admins</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Name &amp; Type</th>
+                                    <th>Role</th>
+                                    <th>Email &amp; Phone</th>
+                                    <th>Address / Operating Region</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-users-tbody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="admin-users-empty" class="empty-state" style="display:none;">
+                        <div class="empty-icon">👥</div>
+                        <h3>No users found</h3>
+                        <p>No registered user matches the search criteria.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Detailed Donation Audit Modal -->
+    <div class="modal-overlay" id="admin-detail-modal">
+        <div class="modal-container" style="max-width:680px;">
+            <div class="modal-header">
+                <h3>Donation Audit Record</h3>
+                <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="label">Food Name</div>
+                        <div class="val" id="modal-det-food">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Current Status</div>
+                        <div class="val" id="modal-det-status">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Category</div>
+                        <div class="val" id="modal-det-category">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Quantity</div>
+                        <div class="val" id="modal-det-quantity">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Donor Entity</div>
+                        <div class="val" id="modal-det-donor">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Donor Contact</div>
+                        <div class="val" id="modal-det-phone">-</div>
+                    </div>
+                    <div class="detail-item detail-full">
+                        <div class="label">Pickup Location</div>
+                        <div class="val" id="modal-det-location">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Storage Conditions</div>
+                        <div class="val" id="modal-det-storage">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Allergen Declarations</div>
+                        <div class="val" id="modal-det-allergens">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Preparation Timestamp</div>
+                        <div class="val" id="modal-det-prep">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">Safe Collection Deadline</div>
+                        <div class="val" id="modal-det-deadline">-</div>
+                    </div>
+                    <div class="detail-item detail-full">
+                        <div class="label">Special Instructions &amp; Notes</div>
+                        <div class="val" id="modal-det-notes">-</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-modal-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding:30px 0;">
+        <div class="container" style="text-align:center; font-size:0.85rem; color:#94a3b8;">
+            &copy; 2026 SharePlate – System Administration Console.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Food Donation – SharePlate</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <div class="brand-icon">🌱</div>
+                <span>SharePlate</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="donor-dashboard.html" class="nav-link">Donor Dashboard</a>
+                <a href="add-donation.html" class="nav-link active">+ Add Food Donation</a>
+                <a href="available-donations.html" class="nav-link">All Available Food</a>
+            </div>
+
+            <div class="nav-actions" id="nav-auth-actions">
+                <!-- Injected by api.js -->
+            </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Form Content -->
+    <main style="flex:1; padding:40px 0 60px;">
+        <div class="container">
+            <div class="form-card" style="max-width:760px;">
+                <div class="form-header">
+                    <h1 id="form-page-title">Post Surplus Food Donation</h1>
+                    <p id="form-page-subtitle">Provide food quality, safe collection deadlines, and pickup instructions for collecting NGOs.</p>
+                </div>
+
+                <form id="donation-form">
+                    <!-- 1. Food Name & Quantity -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donation-food-name" class="form-label">Food Item Name <span class="required">*</span></label>
+                            <input type="text" id="donation-food-name" class="form-control" placeholder="e.g. Mixed Veg Fried Rice &amp; Curry" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donation-quantity" class="form-label">Food Quantity <span class="required">*</span></label>
+                            <input type="text" id="donation-quantity" class="form-control" placeholder="e.g. 50 meal boxes / 15 kg" required>
+                        </div>
+                    </div>
+
+                    <!-- 2. Category & Storage Conditions -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donation-category" class="form-label">Food Category <span class="required">*</span></label>
+                            <select id="donation-category" class="form-control" required>
+                                <option value="Cooked Food">Cooked Food (Meals &amp; Curries)</option>
+                                <option value="Bakery & Bread">Bakery &amp; Bread (Loaves, Buns, Pastries)</option>
+                                <option value="Fruits & Vegetables">Fruits &amp; Vegetables (Fresh Produce)</option>
+                                <option value="Packaged Food">Packaged / Canned Food (Unopened)</option>
+                                <option value="Raw Ingredients">Raw Ingredients &amp; Grains</option>
+                                <option value="Beverages">Beverages &amp; Juices</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="donation-storage" class="form-label">Storage Conditions <span class="required">*</span></label>
+                            <select id="donation-storage" class="form-control" required>
+                                <option value="Room Temperature">Room Temperature / Dry Shelf</option>
+                                <option value="Hot Insulated Containers">Hot Insulated Containers (&gt; 60°C)</option>
+                                <option value="Refrigerated Storage">Refrigerated (0°C to 4°C)</option>
+                                <option value="Keep Frozen">Deep Frozen (-18°C)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 3. Preparation Time & Safe Collection Deadline -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donation-prep-time" class="form-label">Preparation Date &amp; Time <span class="required">*</span></label>
+                            <input type="datetime-local" id="donation-prep-time" class="form-control" required>
+                            <div class="form-hint">When was this food cooked or packed?</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="donation-deadline" class="form-label">Safe Collection Deadline <span class="required">*</span></label>
+                            <input type="datetime-local" id="donation-deadline" class="form-control" required>
+                            <div class="form-hint">Latest time food must be picked up for food safety.</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Pickup Location -->
+                    <div class="form-group">
+                        <label for="donation-pickup" class="form-label">Pickup Location &amp; Instructions <span class="required">*</span></label>
+                        <textarea id="donation-pickup" class="form-control" placeholder="Kitchen loading bay, restaurant gate 2, contact person at desk, etc." required></textarea>
+                    </div>
+
+                    <!-- 5. Allergen Information & Notes -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donation-allergens" class="form-label">Allergen Information</label>
+                            <input type="text" id="donation-allergens" class="form-control" placeholder="e.g. Contains Dairy, Peanuts, Gluten or None">
+                            <div class="form-hint">Crucial for NGOs distributing to vulnerable recipients.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="donation-notes" class="form-label">Special Handling Notes</label>
+                            <input type="text" id="donation-notes" class="form-control" placeholder="e.g. Bring own food containers, utensils included">
+                        </div>
+                    </div>
+
+                    <!-- Submit Actions -->
+                    <div style="display:flex; justify-content:flex-end; gap:16px; margin-top:20px;">
+                        <a href="donor-dashboard.html" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" id="btn-submit-donation" class="btn btn-primary btn-lg">
+                            Publish Food Donation
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding:30px 0;">
+        <div class="container" style="text-align:center; font-size:0.85rem; color:#94a3b8;">
+            &copy; 2026 SharePlate – Food Donation System.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/donor.js"></script>
+</body>
+</html>

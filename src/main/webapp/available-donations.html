@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Food Donations – SharePlate</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body id="available-donations-page">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <div class="brand-icon">🌱</div>
+                <span>SharePlate</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="available-donations.html" class="nav-link active">Available Food</a>
+                <a href="ngo-dashboard.html" class="nav-link">NGO Portal</a>
+                <a href="donor-dashboard.html" class="nav-link">Donor Portal</a>
+            </div>
+
+            <div class="nav-actions" id="nav-auth-actions">
+                <!-- Injected dynamically by api.js -->
+            </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="flex:1; padding:40px 0 70px;">
+        <div class="container">
+            <!-- Header Banner -->
+            <div style="margin-bottom:32px;">
+                <h1 style="font-size:2.2rem; font-weight:800; color:var(--primary-darker); margin-bottom:8px;">
+                    Available Food Donations
+                </h1>
+                <p style="color:var(--text-secondary); font-size:1.05rem;">
+                    Surplus meals and food supplies ready for immediate pickup by registered NGOs, community kitchens, and shelters.
+                </p>
+            </div>
+
+            <!-- Search & Filters Toolbar -->
+            <div class="panel" style="margin-bottom:32px; padding:20px 24px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+                    <div style="flex:1; min-width:260px;">
+                        <input type="text" id="search-food" class="search-input" style="width:100%;" 
+                               placeholder="🔍 Search food item name, pickup location, or donor...">
+                    </div>
+                    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                        <select id="filter-category" class="filter-select">
+                            <option value="ALL">All Categories</option>
+                            <option value="Cooked Food">Cooked Food</option>
+                            <option value="Bakery & Bread">Bakery &amp; Bread</option>
+                            <option value="Fruits & Vegetables">Fruits &amp; Vegetables</option>
+                            <option value="Packaged Food">Packaged Food</option>
+                            <option value="Raw Ingredients">Raw Ingredients</option>
+                            <option value="Beverages">Beverages</option>
+                        </select>
+
+                        <select id="filter-storage" class="filter-select">
+                            <option value="ALL">All Storage Conditions</option>
+                            <option value="Room Temperature">Room Temperature</option>
+                            <option value="Hot Insulated Containers">Hot Insulated Containers</option>
+                            <option value="Refrigerated Storage">Refrigerated</option>
+                            <option value="Keep Frozen">Deep Frozen</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donations Cards Grid -->
+            <div class="donations-grid" id="available-donations-grid">
+                <!-- Injected dynamically by ngo.js -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="available-empty-state" class="empty-state" style="display:none; background:white; border-radius:16px; border:1px solid #e2e8f0; margin-top:20px;">
+                <div class="empty-icon">🥗</div>
+                <h3>No available food donations match your criteria</h3>
+                <p>Try clearing your search query or category filters to view other available surplus food listings.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Request Food Donation Modal -->
+    <div class="modal-overlay" id="request-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Request Food Donation</h3>
+                <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+
+            <form id="food-request-form">
+                <input type="hidden" id="req-donation-id">
+                <div class="modal-body">
+                    <!-- Target Food Summary Box -->
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px; margin-bottom:20px;">
+                        <div style="font-size:0.8rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Selected Food Item</div>
+                        <div id="req-modal-food-name" style="font-size:1.15rem; font-weight:700; color:var(--primary-darker); margin-top:2px;">Food Name</div>
+                        <div style="font-size:0.88rem; color:var(--text-secondary); margin-top:4px;">
+                            <strong>Quantity:</strong> <span id="req-modal-quantity">Quantity</span> • 
+                            <strong>Pickup:</strong> <span id="req-modal-donor">Donor Info</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="req-beneficiaries" class="form-label">Estimated Beneficiaries Fed <span class="required">*</span></label>
+                        <input type="number" id="req-beneficiaries" class="form-control" value="25" min="1" required>
+                        <div class="form-hint">How many people will receive meals from this batch?</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="req-pickup-time" class="form-label">Proposed Pickup Date &amp; Time <span class="required">*</span></label>
+                        <input type="datetime-local" id="req-pickup-time" class="form-control" required>
+                        <div class="form-hint">Ensure this is before the safe collection deadline.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="req-notes" class="form-label">Message / Logistics Note to Donor</label>
+                        <textarea id="req-notes" class="form-control" placeholder="e.g. Hope Shelter volunteer van arriving with thermal carriers at 3 PM."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm Food Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding:30px 0;">
+        <div class="container" style="text-align:center; font-size:0.85rem; color:#94a3b8;">
+            &copy; 2026 SharePlate – Connecting Surplus Food with Communities.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/ngo.js"></script>
+</body>
+</html>

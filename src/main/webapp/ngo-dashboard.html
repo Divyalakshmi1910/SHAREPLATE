@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard – SharePlate</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body id="ngo-dashboard-page">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <div class="brand-icon">🌱</div>
+                <span>SharePlate</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="ngo-dashboard.html" class="nav-link active">NGO Dashboard</a>
+                <a href="available-donations.html" class="nav-link">Browse Surplus Food</a>
+            </div>
+
+            <div class="nav-actions" id="nav-auth-actions">
+                <!-- Injected dynamically by api.js -->
+            </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main NGO Dashboard -->
+    <main class="dashboard-wrapper">
+        <div class="container">
+            <!-- Header Profile Bar -->
+            <div class="dashboard-header">
+                <div class="dashboard-title-group">
+                    <h1>NGO Food Distribution Center</h1>
+                    <p>
+                        Organization: <strong id="ngo-profile-name" style="color:var(--primary-darker);">Loading...</strong> 
+                        (<span id="ngo-profile-org">Shelter / Food Bank</span>)
+                    </p>
+                </div>
+                <div class="dashboard-actions">
+                    <a href="available-donations.html" class="btn btn-primary btn-lg">
+                        🔍 Find Surplus Meals to Claim
+                    </a>
+                </div>
+            </div>
+
+            <!-- KPI Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-info">
+                        <div class="metric-title">Total Requests Placed</div>
+                        <div class="metric-value" id="ngo-kpi-total">0</div>
+                        <div class="metric-subtext">All submitted claims</div>
+                    </div>
+                    <div class="metric-icon-box">📋</div>
+                </div>
+
+                <div class="metric-card accent-blue">
+                    <div class="metric-info">
+                        <div class="metric-title">Approved for Pickup</div>
+                        <div class="metric-value" id="ngo-kpi-approved">0</div>
+                        <div class="metric-subtext">Donor approved • Ready for collection</div>
+                    </div>
+                    <div class="metric-icon-box">🚚</div>
+                </div>
+
+                <div class="metric-card accent-amber">
+                    <div class="metric-info">
+                        <div class="metric-title">Pending Donor Review</div>
+                        <div class="metric-value" id="ngo-kpi-pending">0</div>
+                        <div class="metric-subtext">Awaiting donor response</div>
+                    </div>
+                    <div class="metric-icon-box">⏳</div>
+                </div>
+
+                <div class="metric-card accent-purple">
+                    <div class="metric-info">
+                        <div class="metric-title">Successfully Delivered</div>
+                        <div class="metric-value" id="ngo-kpi-delivered">0</div>
+                        <div class="metric-subtext">Redistributed to people in need</div>
+                    </div>
+                    <div class="metric-icon-box">🎉</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-target="tab-ngo-requests">
+                    📦 My Food Requests &amp; Deliveries 
+                    <span class="tab-counter" id="ngo-tab-counter-requests">0</span>
+                </button>
+                <button class="tab-btn" data-target="tab-ngo-browse">
+                    🥗 Browse Available Surplus
+                </button>
+            </div>
+
+            <!-- Tab 1: Requests & Pickups Tracker -->
+            <div id="tab-ngo-requests" class="tab-content active">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Tracked Food Requests &amp; Pickups</div>
+                        <div style="font-size:0.85rem; color:var(--text-secondary);">
+                            Status updates sync directly with donors &amp; admin oversight.
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Food Item &amp; Details</th>
+                                    <th>Donor &amp; Pickup Address</th>
+                                    <th>Beneficiaries &amp; Pickup Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ngo-requests-tbody">
+                                <!-- Populated dynamically by ngo.js -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="ngo-requests-empty" class="empty-state" style="display:none;">
+                        <div class="empty-icon">🤝</div>
+                        <h3>You haven't requested any food donations yet</h3>
+                        <p>Browse live surplus food listings in your area and request batches for your community.</p>
+                        <a href="available-donations.html" class="btn btn-primary">Browse Available Food</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Quick Surplus Browser -->
+            <div id="tab-ngo-browse" class="tab-content">
+                <div class="panel" style="padding:24px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+                        <h2 style="font-size:1.3rem; font-weight:700;">Live Surplus Food Listings</h2>
+                        <a href="available-donations.html" class="btn btn-sm btn-secondary">Open Full Catalog &rarr;</a>
+                    </div>
+                    <div class="donations-grid" id="available-donations-grid">
+                        <!-- Populated by ngo.js -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Request Food Donation Modal -->
+    <div class="modal-overlay" id="request-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Request Food Donation</h3>
+                <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+
+            <form id="food-request-form">
+                <input type="hidden" id="req-donation-id">
+                <div class="modal-body">
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px; margin-bottom:20px;">
+                        <div style="font-size:0.8rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Selected Food Item</div>
+                        <div id="req-modal-food-name" style="font-size:1.15rem; font-weight:700; color:var(--primary-darker); margin-top:2px;">Food Name</div>
+                        <div style="font-size:0.88rem; color:var(--text-secondary); margin-top:4px;">
+                            <strong>Quantity:</strong> <span id="req-modal-quantity">Quantity</span> • 
+                            <strong>Pickup:</strong> <span id="req-modal-donor">Donor Info</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="req-beneficiaries" class="form-label">Estimated Beneficiaries Fed <span class="required">*</span></label>
+                        <input type="number" id="req-beneficiaries" class="form-control" value="25" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="req-pickup-time" class="form-label">Proposed Pickup Date &amp; Time <span class="required">*</span></label>
+                        <input type="datetime-local" id="req-pickup-time" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="req-notes" class="form-label">Message / Logistics Note to Donor</label>
+                        <textarea id="req-notes" class="form-control" placeholder="e.g. Volunteer vehicle arriving with insulated containers."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm Food Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding:30px 0;">
+        <div class="container" style="text-align:center; font-size:0.85rem; color:#94a3b8;">
+            &copy; 2026 SharePlate – NGO Operations Center.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/ngo.js"></script>
+</body>
+</html>

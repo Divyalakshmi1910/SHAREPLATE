@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharePlate – Food Donation &amp; Redistribution System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <div class="brand-icon">🌱</div>
+                <span>SharePlate</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="available-donations.html" class="nav-link">Available Food</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#impact" class="nav-link">Our Impact</a>
+                <a href="#about" class="nav-link">About Us</a>
+            </div>
+
+            <div class="nav-actions" id="nav-auth-actions">
+                <!-- Dynamically populated by api.js with Login/Register or User Badge -->
+                <a href="login.html" class="btn btn-sm btn-secondary">Log In</a>
+                <a href="register.html" class="btn btn-sm btn-primary">Register</a>
+            </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-grid">
+            <div>
+                <div class="hero-badge">
+                    <span>✨ Zero Waste • Zero Hunger Community</span>
+                </div>
+                <h1 class="hero-title">
+                    Rescue Surplus Food. <span>Feed Communities in Need.</span>
+                </h1>
+                <p class="hero-desc">
+                    SharePlate bridges the gap between restaurants, canteens, and caterers with local NGOs and food banks. Turn edible surplus meals into hope for hungry people instead of landfill waste.
+                </p>
+                <div class="hero-buttons">
+                    <a href="register.html" class="btn btn-primary btn-lg">Join as Donor or NGO</a>
+                    <a href="available-donations.html" class="btn btn-outline btn-lg">Browse Surplus Food</a>
+                </div>
+            </div>
+
+            <!-- Hero Interactive Preview Card -->
+            <div class="hero-card">
+                <div class="hero-card-header">
+                    <div>
+                        <h3>Live Donation Stream</h3>
+                        <span style="font-size:0.8rem; color:var(--text-secondary);">Direct from community kitchens</span>
+                    </div>
+                    <span class="badge-status badge-available">Live Feed</span>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <strong style="color:var(--text-primary); font-size:1.02rem;">Vegetable Biryani &amp; Dal</strong>
+                            <span class="tag-category">Cooked Food</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:8px;">
+                            <strong>Quantity:</strong> 45 portions (18 kg) • Green Garden Bistro
+                        </p>
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
+                            <span class="deadline-pill">⏰ Safe Collection: 4h left</span>
+                            <span style="color:var(--primary-dark); font-weight:700;">Hot Insulated Container</span>
+                        </div>
+                    </div>
+
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <strong style="color:var(--text-primary); font-size:1.02rem;">Fresh Bakery Breads &amp; Buns</strong>
+                            <span class="tag-category">Bakery &amp; Bread</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:8px;">
+                            <strong>Quantity:</strong> 35 loaves &amp; 50 rolls • Sunrise Bakery
+                        </p>
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
+                            <span class="deadline-pill">⏰ Safe Collection: 14h left</span>
+                            <span style="color:var(--primary-dark); font-weight:700;">Room Temperature</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px; text-align:center;">
+                    <a href="available-donations.html" style="font-weight:700; color:var(--primary-dark); font-size:0.95rem;">
+                        View All Available Donations &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Impact Counter Stats Section -->
+    <section class="stats-banner" id="impact">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">12,450+</div>
+                    <div class="stat-label">Nutritious Meals Redistributed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">48+</div>
+                    <div class="stat-label">Certified NGO Partners</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">65+</div>
+                    <div class="stat-label">Restaurants &amp; Canteens</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5.2 Tons</div>
+                    <div class="stat-label">Food Waste Prevented</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Simplified Food Rescue Workflow</div>
+                <h2 class="section-title">How SharePlate Works</h2>
+                <p class="section-description">
+                    A streamlined, transparent 3-step cycle ensuring safe food handling, quick pickups, and verified delivery.
+                </p>
+            </div>
+
+            <div class="workflow-grid">
+                <div class="workflow-card">
+                    <div class="workflow-step">1</div>
+                    <div class="workflow-icon">🍲</div>
+                    <h3>Donors List Surplus</h3>
+                    <p>
+                        Restaurants, university canteens, and caterers post excess food with quantity, cooking time, pickup deadline, storage conditions, and allergen details.
+                    </p>
+                </div>
+
+                <div class="workflow-card">
+                    <div class="workflow-step">2</div>
+                    <div class="workflow-icon">🤝</div>
+                    <h3>NGOs Request &amp; Coordinate</h3>
+                    <p>
+                        Nearby registered NGOs claim donations based on beneficiary capacity and arrange timely pickup before safe consumption windows expire.
+                    </p>
+                </div>
+
+                <div class="workflow-card">
+                    <div class="workflow-step">3</div>
+                    <div class="workflow-icon">🚚</div>
+                    <h3>Safe Pickup &amp; Delivery</h3>
+                    <p>
+                        Donors approve the match, food is collected in safe insulated boxes, and delivered straight to shelters, community centers, and families.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose SharePlate -->
+    <section class="section" id="about" style="background-color:#ffffff; border-top:1px solid #e2e8f0; border-bottom:1px solid #e2e8f0;">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Safety &amp; Transparency First</div>
+                <h2 class="section-title">Designed for Fast, Responsible Food Logistics</h2>
+                <p class="section-description">
+                    Every donation on SharePlate is documented with strict food safety parameters to protect recipients and make redistribution seamless.
+                </p>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+                <div style="padding:24px; border-radius:12px; background:#f8fafc; border:1px solid #e2e8f0;">
+                    <div style="font-size:1.8rem; margin-bottom:12px;">⏱️</div>
+                    <h4 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Safe Collection Windows</h4>
+                    <p style="color:var(--text-secondary); font-size:0.92rem;">
+                        Automated countdown deadlines ensure cooked food is picked up while fresh and safe according to standard food safety norms.
+                    </p>
+                </div>
+
+                <div style="padding:24px; border-radius:12px; background:#f8fafc; border:1px solid #e2e8f0;">
+                    <div style="font-size:1.8rem; margin-bottom:12px;">❄️</div>
+                    <h4 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Storage Condition Tagging</h4>
+                    <p style="color:var(--text-secondary); font-size:0.92rem;">
+                        Donations specify temperature handling requirements (Hot Insulated, Refrigerated, Room Temp, Frozen) for cold-chain safety.
+                    </p>
+                </div>
+
+                <div style="padding:24px; border-radius:12px; background:#f8fafc; border:1px solid #e2e8f0;">
+                    <div style="font-size:1.8rem; margin-bottom:12px;">🏷️</div>
+                    <h4 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Allergen Declarations</h4>
+                    <p style="color:var(--text-secondary); font-size:0.92rem;">
+                        Transparent labeling of dairy, nuts, gluten, or vegan attributes allows NGOs to distribute meals responsibly to vulnerable groups.
+                    </p>
+                </div>
+
+                <div style="padding:24px; border-radius:12px; background:#f8fafc; border:1px solid #e2e8f0;">
+                    <div style="font-size:1.8rem; margin-bottom:12px;">📊</div>
+                    <h4 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">End-to-End Status Lifecycle</h4>
+                    <p style="color:var(--text-secondary); font-size:0.92rem;">
+                        Track each meal real-time: from <em>Available</em> &rarr; <em>Requested</em> &rarr; <em>Approved</em> &rarr; <em>Collected</em> &rarr; <em>Delivered</em>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="section">
+        <div class="container">
+            <div style="background:var(--primary-gradient); color:white; border-radius:var(--radius-xl); padding:60px 40px; text-align:center; box-shadow:var(--shadow-xl);">
+                <h2 style="font-size:2.4rem; font-weight:800; margin-bottom:16px;">Ready to Put Surplus Food to Good Use?</h2>
+                <p style="font-size:1.15rem; max-width:620px; margin:0 auto 32px; color:#ecfdf5;">
+                    Whether you are a food business looking to reduce waste or an NGO seeking dependable meal donations, join SharePlate today.
+                </p>
+                <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+                    <a href="register.html" class="btn btn-primary" style="background:white; color:var(--primary-darker); font-size:1.05rem; padding:14px 32px;">
+                        Register Now (Free)
+                    </a>
+                    <a href="available-donations.html" class="btn btn-outline" style="border:1px solid rgba(255,255,255,0.7); color:white; font-size:1.05rem; padding:14px 32px;">
+                        Explore Surplus Listings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>🌱 SharePlate</h4>
+                    <p>
+                        A community-driven food donation and redistribution network connecting commercial surplus with charitable organizations.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h5>For Donors</h5>
+                    <ul>
+                        <li><a href="register.html">Register as Food Donor</a></li>
+                        <li><a href="add-donation.html">Post Surplus Food</a></li>
+                        <li><a href="donor-dashboard.html">Donor Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>For NGOs</h5>
+                    <ul>
+                        <li><a href="register.html">Register as Charity / NGO</a></li>
+                        <li><a href="available-donations.html">Browse Surplus Donations</a></li>
+                        <li><a href="ngo-dashboard.html">NGO Pickup Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Platform &amp; Tech</h5>
+                    <ul>
+                        <li><a href="admin-dashboard.html">Admin Oversight</a></li>
+                        <li><a href="login.html">Sign In to Account</a></li>
+                        <li style="color:#94a3b8; font-size:0.85rem; margin-top:8px;">Powered by Java 17 Servlets, JDBC, and MySQL</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>&copy; 2026 SharePlate – Food Donation &amp; Redistribution System. All rights reserved.</div>
+                <div>Clean Green &amp; White Design • Zero Hunger Initiative</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+</body>
+</html>
