@@ -1,135 +1,171 @@
-# SharePlate – Food Donation & Redistribution System
+🍽️ SharePlate – Food Donation & Redistribution System
 
-**SharePlate** is a complete, modern, responsive web application connecting food donors (restaurants, college canteens, bakeries, caterers, and individuals) with registered NGOs, shelters, and community food banks to rescue surplus food and distribute it to people in need.
+A complete Java web application connecting food donors with NGOs to eliminate food waste and fight hunger.
 
----
+👩‍💻 Team Members
+Name	Register Number
+Divya Lakshmi S B	250701177
+Kaviya B	250701338
+Gokila A	250701197
+Dhanushri V	250701154
 
-## 🌟 Architecture & OOP Implementation
+Institution: Rajalakshmi Engineering College, Thandalam (Autonomous)
+Department: Computer Science and Engineering
+Faculty In-charges: Bhavani M (OOP Lab) | Vinothini S (DBMS Lab)
+Academic Year: 2025–2026
 
-SharePlate strictly adheres to all core Object-Oriented Programming (OOP) principles:
+📌 About the Project
 
-1. **Encapsulation**:
-   * All entity model fields are declared `private` (`User`, `Donor`, `NGO`, `Admin`, `Donation`, `DonationRequest`).
-   * Explicit, clean getters and setters control access and validation.
-2. **Inheritance**:
-   * Parent class: [`User.java`](file:///C:/Users/arunb/.gemini/antigravity/scratch/shareplate/src/main/java/com/shareplate/model/User.java)
-   * Child classes: [`Donor.java`](file:///C:/Users/arunb/.gemini/antigravity/scratch/shareplate/src/main/java/com/shareplate/model/Donor.java), [`NGO.java`](file:///C:/Users/arunb/.gemini/antigravity/scratch/shareplate/src/main/java/com/shareplate/model/NGO.java), [`Admin.java`](file:///C:/Users/arunb/.gemini/antigravity/scratch/shareplate/src/main/java/com/shareplate/model/Admin.java) extending `User`.
-3. **Polymorphism**:
-   * Subclasses override role-specific methods from the parent class:
-     * `getDashboardUrl()`: returns `"donor-dashboard.html"`, `"ngo-dashboard.html"`, or `"admin-dashboard.html"`.
-     * `canCreateDonation()`: `Donor` (`true`), `NGO` (`false`).
-     * `canRequestDonation()`: `Donor` (`false`), `NGO` (`true`).
-     * `getRoleDisplayName()`: returns customized role description.
-   * `User.create(...)` acts as a polymorphic factory instantiating the concrete child type.
-4. **Abstraction**:
-   * [`RoleAccessible.java`](file:///C:/Users/arunb/.gemini/antigravity/scratch/shareplate/src/main/java/com/shareplate/model/RoleAccessible.java): An interface establishing the behavioral contract for all system actors.
+SharePlate is a 3-tier Java web application that connects:
 
----
+🍱 Food Donors (restaurants, canteens, bakeries, individuals)
+🏢 NGOs / Charities (shelters, food banks, community kitchens)
+🛡️ Admin (manages users and monitors all activity)
 
-## 🗄️ Database Schema (`shareplate_db`)
+Built using Java Servlets, JDBC, MySQL, Maven, HTML, CSS, JavaScript deployed on Apache Tomcat 10.1.
 
-The relational database consists of 3 connected tables:
+🏗️ 3-Tier Architecture
+┌─────────────────────────────────────┐
+│   TIER 1: PRESENTATION              │
+│   HTML + CSS + JavaScript (Browser) │
+└──────────────┬──────────────────────┘
+               │ HTTP / JSON
+┌──────────────▼──────────────────────┐
+│   TIER 2: APPLICATION (Tomcat)      │
+│   Servlets → DAO → Models           │
+└──────────────┬──────────────────────┘
+               │ JDBC / SQL
+┌──────────────▼──────────────────────┐
+│   TIER 3: DATABASE                  │
+│   MySQL 8 – shareplate_db           │
+└─────────────────────────────────────┘
+🔷 OOP Concepts Applied
+Concept	Implementation
+Encapsulation	All model fields (User, Donor, NGO, Admin) are private with getters/setters
+Inheritance	Donor, NGO, Admin all extend the parent User class
+Polymorphism	User.create() factory method instantiates the right subclass based on role; getDashboardUrl(), canCreateDonation() overridden per role
+Abstraction	RoleAccessible.java interface defines behavioral contract for all actors
+🗄️ Database Schema (shareplate_db)
 
-### 1. `users`
-* `user_id` (INT, Primary Key, Auto Increment)
-* `name` (VARCHAR(120), NOT NULL)
-* `email` (VARCHAR(120), NOT NULL, UNIQUE)
-* `password_hash` (VARCHAR(255), NOT NULL) — Salted SHA-256
-* `phone` (VARCHAR(25), NOT NULL)
-* `role` (ENUM('DONOR', 'NGO', 'ADMIN'), NOT NULL)
-* `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+3 Tables:
 
-### 2. `donations`
-* `donation_id` (INT, Primary Key, Auto Increment)
-* `donor_id` (INT, Foreign Key referencing `users(user_id)`)
-* `food_name` (VARCHAR(150), NOT NULL)
-* `category` (VARCHAR(60), NOT NULL)
-* `quantity` (VARCHAR(100), NOT NULL)
-* `preparation_datetime` (DATETIME, NOT NULL)
-* `safe_collection_deadline` (DATETIME, NOT NULL)
-* `pickup_location` (TEXT, NOT NULL)
-* `storage_conditions` (VARCHAR(100), NOT NULL)
-* `allergen_information` (VARCHAR(255), DEFAULT 'None reported')
-* `status` (ENUM('Available', 'Requested', 'Approved', 'Collected', 'Delivered'))
-* `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+users
+Column	Type	Description
+user_id	INT PK AUTO_INCREMENT	Unique user ID
+name	VARCHAR(120)	Full name
+email	VARCHAR(120) UNIQUE	Login email
+password_hash	VARCHAR(255)	Salted SHA-256 hash
+phone	VARCHAR(25)	Contact number
+role	ENUM('DONOR','NGO','ADMIN')	User role
+created_at	TIMESTAMP	Registration time
+donations
+Column	Type	Description
+donation_id	INT PK AUTO_INCREMENT	Unique donation ID
+donor_id	INT FK → users	Who donated
+food_name	VARCHAR(150)	Name of food
+quantity	VARCHAR(100)	Amount/portions
+status	ENUM	Available/Requested/Collected
+donation_requests
+Column	Type	Description
+request_id	INT PK AUTO_INCREMENT	Unique request ID
+donation_id	INT FK → donations	Which food
+ngo_id	INT FK → users	Which NGO requested
+request_status	ENUM	PENDING/APPROVED/REJECTED
+⚡ Test Accounts
+Role	Email	Password
+🛡️ Admin	admin@shareplate.org	admin123
+🍱 Donor	donor@greengarden.com	donor123
+🏢 NGO	relief@hopeshelter.org	ngo123
+🚀 How to Run Locally
+Prerequisites
+Java JDK 17+
+Apache Maven 3.6+
+Apache Tomcat 10.1
+MySQL 8.0
+Step 1 – Set Up MySQL Database
 
-### 3. `donation_requests`
-* `request_id` (INT, Primary Key, Auto Increment)
-* `donation_id` (INT, Foreign Key referencing `donations(donation_id)`)
-* `ngo_id` (INT, Foreign Key referencing `users(user_id)`)
-* `request_date` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
-* `request_status` (ENUM('PENDING', 'APPROVED', 'REJECTED', 'COLLECTED', 'DELIVERED'))
-* `beneficiary_count` (INT, DEFAULT 10)
-* `request_notes` (TEXT)
+Open MySQL and run:
 
----
+sql
+source schema.sql;
+source sample_data.sql;
 
-## 🔒 Security Features
+This creates shareplate_db with all tables and sample data.
 
-1. **Password Hashing**: Uses cryptographically secure random 16-byte salts and SHA-256 via [`PasswordUtil.java`](file:///C:/Users/arunb/.gemini/antigravity/scratch/shareplate/src/main/java/com/shareplate/util/PasswordUtil.java). No plain-text passwords are ever stored.
-2. **SQL Injection Prevention**: All queries in `UserDao`, `DonationDao`, and `RequestDao` strictly use JDBC `PreparedStatement` with parameterized placeholders (`?`).
-3. **Database Transactions (`conn.setAutoCommit(false)`)**:
-   * Atomically locks and updates food status to `Requested` when an NGO claims a batch, preventing concurrent double-claims.
-   * Atomically transitions requests to `APPROVED` and donation to `Approved`.
-   * Automatically resets donation status to `Available` when a request is `REJECTED`.
-4. **Ownership Verification**:
-   * Donors can only edit and delete their own donations.
-   * Donors can only approve/reject requests for their own food listings.
-5. **Role-Based Access Control**:
-   * Servlets verify the authenticated `HttpSession` and reject unauthorized roles with `401 Unauthorized` or `403 Forbidden`.
-6. **Environment Variable Configuration**:
-   * MySQL credentials can be supplied via environment variables (`DB_URL`, `DB_USER`, `DB_PASSWORD`) or configured in `src/main/resources/db.properties`.
+Step 2 – Configure Database Password
 
----
+Edit src/main/resources/db.properties:
 
-## ⚡ Seed Accounts for Immediate Testing
-
-Run [`schema.sql`](file:///C:/Users/arunb/.gemini/antigravity/scratch/shareplate/schema.sql) followed by [`sample_data.sql`](file:///C:/Users/arunb/.gemini/antigravity/scratch/shareplate/sample_data.sql) in MySQL. The seed accounts are:
-
-| Role | Name | Email | Password |
-|---|---|---|---|
-| **Donor** | Green Garden Bistro | `donor@greengarden.com` | `donor123` |
-| **Donor** | City College Central Canteen | `canteen@citycollege.edu` | `donor123` |
-| **NGO** | Hope Shelter Foundation | `relief@hopeshelter.org` | `ngo123` |
-| **NGO** | Annapurna Care Network | `coordinator@care.org` | `ngo123` |
-| **Admin** | System Administrator | `admin@shareplate.org` | `admin123` |
-
----
-
-## 🚀 How to Run the Application Locally
-
-### Step 1: Set Up MySQL 8
-1. Open your MySQL client (Command Line, Workbench, or phpMyAdmin):
-   ```sql
-   source C:/Users/arunb/.gemini/antigravity/scratch/shareplate/schema.sql;
-   source C:/Users/arunb/.gemini/antigravity/scratch/shareplate/sample_data.sql;
-   ```
-2. This creates `shareplate_db`, creates all relational tables, and inserts sample seed data with salted password hashes.
-
-### Step 2: Configure Database Credentials
-Edit `src/main/resources/db.properties` with your local MySQL password:
-```properties
-db.driver=com.mysql.cj.jdbc.Driver
-db.url=jdbc:mysql://localhost:3306/shareplate_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+properties
+db.url=jdbc:mysql://localhost:3306/shareplate_db?useSSL=false&serverTimezone=UTC
 db.username=root
-db.password=your_mysql_password
-```
-*(Alternatively, set the environment variable `DB_PASSWORD=your_mysql_password`).*
-
-### Step 3: Package with Maven
-In the `shareplate` root directory, execute:
-```bash
+db.password=YOUR_MYSQL_PASSWORD
+Step 3 – Build with Maven
+bash
 mvn clean package
-```
-This builds `target/shareplate.war`.
 
-### Step 4: Deploy to Apache Tomcat 10.1
-1. Copy `target/shareplate.war` into Tomcat's `webapps/` folder:
-   ```cmd
-   copy target\shareplate.war C:\apache-tomcat-10.1.x\webapps\
-   ```
-2. Start Tomcat (`bin\startup.bat`).
-3. Open your browser to:
-   ```
-   http://localhost:8080/shareplate/
-   ```
+This generates target/shareplate.war
+
+Step 4 – Deploy to Tomcat
+cmd
+copy target\shareplate.war C:\Tomcat\webapps\
+
+Then start Tomcat:
+
+cmd
+set "CATALINA_HOME=C:\Tomcat"
+set "JAVA_HOME=C:\Program Files\Java\jdk-17"
+C:\Tomcat\bin\startup.bat
+Step 5 – Open in Browser
+http://localhost:8080/shareplate/
+🔒 Security Features
+✅ Password Hashing – SHA-256 with random 16-byte salt (never stored plain text)
+✅ SQL Injection Prevention – All queries use JDBC PreparedStatement
+✅ Session Authentication – HttpSession checked on every protected servlet
+✅ Role-Based Access – Donors, NGOs, Admins see only their permitted pages
+✅ Atomic Transactions – conn.setAutoCommit(false) prevents double-booking of donations
+🗂️ Project Structure
+shareplate/
+├── pom.xml                         # Maven build config
+├── schema.sql                      # Database creation script
+├── sample_data.sql                 # Seed data script
+└── src/main/
+    ├── java/com/shareplate/
+    │   ├── config/DatabaseConfig.java   # JDBC Connection
+    │   ├── dao/                         # Data Access Layer
+    │   │   ├── UserDao.java
+    │   │   ├── DonationDao.java
+    │   │   └── RequestDao.java
+    │   ├── model/                       # OOP Entity Classes
+    │   │   ├── User.java  (Parent)
+    │   │   ├── Donor.java (Child)
+    │   │   ├── NGO.java   (Child)
+    │   │   └── Admin.java (Child)
+    │   ├── servlet/                     # Controller Layer
+    │   │   ├── AuthServlet.java
+    │   │   ├── DonationServlet.java
+    │   │   ├── RequestServlet.java
+    │   │   └── AdminServlet.java
+    │   └── util/
+    │       ├── JsonUtil.java
+    │       └── PasswordUtil.java
+    └── webapp/
+        ├── index.html
+        ├── login.html
+        ├── register.html
+        ├── donor-dashboard.html
+        ├── ngo-dashboard.html
+        └── admin-dashboard.html
+🛠️ Tech Stack
+Layer	Technology
+Frontend	HTML5, CSS3, JavaScript (Vanilla)
+Backend	Java 17, Jakarta Servlets
+Database	MySQL 8.0, JDBC
+Build Tool	Apache Maven
+Server	Apache Tomcat 10.1
+Security	SHA-256 Password Hashing
+📄 License
+
+MIT License – © 2026 Divyalakshmi1910
+
+Built with ❤️ to fight food waste and hunger.
